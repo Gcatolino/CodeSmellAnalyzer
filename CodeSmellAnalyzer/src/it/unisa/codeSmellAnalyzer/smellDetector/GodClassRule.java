@@ -33,7 +33,7 @@ public class GodClassRule {
 	}
 
 	private static boolean isLargeClassLowCohesion(ClassBean pClass) {
-		int featureSum = CKMetrics.getNOM(pClass) + CKMetrics.getNOA(pClass);
+		int featureSum = CKMetrics.getWMC(pClass) + CKMetrics.getNOA(pClass);
 
 		if( (CKMetrics.getLCOM2(pClass) > 350) || (featureSum > 20)) {
 			if(CKMetrics.getELOC(pClass) > 500)  
@@ -47,7 +47,7 @@ public class GodClassRule {
 
 		if( (pClassName.contains("process")) || (pClassName.contains("control") || pClassName.contains("command") 
 				|| pClassName.contains("manage") || pClassName.contains("drive") || pClassName.contains("system"))) {
-			int featureSum = CKMetrics.getNOM(pClass) + CKMetrics.getNOA(pClass);
+			int featureSum = CKMetrics.getWMC(pClass) + CKMetrics.getNOA(pClass);
 
 			if( (CKMetrics.getLCOM2(pClass) > 350) || (featureSum > 20)) {
 				if(CKMetrics.getELOC(pClass) > 500)  

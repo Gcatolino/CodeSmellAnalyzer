@@ -27,7 +27,7 @@ public class CKMetrics {
 		return 0;
 	}
 	
-	public static int getWMC(ClassBean cb) {
+	public static int getMcCabeMetric(ClassBean cb) {
 
 		int WMC = 0;
 
@@ -40,7 +40,29 @@ public class CKMetrics {
 
 	}
 
+	public static int getHalsteadVocabulary(ClassBean cb) {
+		return cb.getTextContent().split(" ").length;
+	}
 
+	public static int getHalsteadLenght(ClassBean cb) {
+		String tokens[] = cb.getTextContent().split(" ");
+		Vector<String> distinct = new Vector<String>();
+		
+		for(String token:tokens) {
+			if(! distinct.contains(token)) {
+				distinct.add(token);
+			}
+		}
+		
+		return distinct.size();
+	}
+	
+	public static double getHalsteadVolume(ClassBean cb) {
+		return getHalsteadLenght(cb) * Math.log(getHalsteadVocabulary(cb));
+	}
+	
+	// TODO: add conceptual metrics. 
+	
 	public static int getDIT(ClassBean cb, Vector<ClassBean> System, int inizialization){
 
 		int DIT = inizialization;
@@ -80,27 +102,73 @@ public class CKMetrics {
 	}
 
 	public static int getRFC(ClassBean cb){
-
 		int RFC = 0;
 
-		Vector<MethodBean> methods = (Vector<MethodBean>) cb.getMethods();
+		Vector<MethodBean> methods = (Vector<MethodBean>) cb.getMethods();	
+		RFC+=methods.size();
+		
 		for(MethodBean m: methods){
 			RFC+=m.getMethodCalls().size();
 		}
 
 		return RFC;
-
 	}
 
-
 	public static int getCBO(ClassBean cb){
-
 		Vector<String> imports = (Vector<String>) cb.getImports();
 
 		return imports.size();
-
 	}
 
+	public static int getMPC(ClassBean cb){
+		int invocations=0;
+		
+		for(MethodBean methodBean: cb.getMethods()) {
+			invocations+=methodBean.getMethodCalls().size();
+		}
+		
+		return invocations;
+	}
+	
+	public static int getIFC(ClassBean cb){
+		int invocations=0;
+		int parameters=0;
+		
+		for(MethodBean methodBean: cb.getMethods()) {
+			for(MethodBean call: methodBean.getMethodCalls()) {
+				invocations++;
+				parameters+=call.getParameters().size();
+			}
+		}
+		
+		return invocations/parameters;
+	}
+	
+	public static int getDAC(ClassBean cb){
+		int dac=0;
+		for(InstanceVariableBean attribute: cb.getInstanceVariables()) {
+			if(! attribute.getType().equals(cb.getName())) {
+				dac++;
+			}
+		}
+		
+		return dac;
+	}
+	
+	public static int getDAC2(ClassBean cb){
+		Vector<String> types = new Vector<String>();
+		
+		for(InstanceVariableBean attribute: cb.getInstanceVariables()) {
+			if(! attribute.getType().equals(cb.getName())) {
+				if(! types.contains(attribute.getType())) {
+					types.add(attribute.getType());
+				}
+			}
+		}
+		
+		return types.size();
+	}
+	
 	public static int getLCOM1(ClassBean cb){
 		int notShare = 0;
 
@@ -288,15 +356,25 @@ public class CKMetrics {
 	
 	// 
 	public static int getICH(ClassBean cb) {
-		int ich=0;
+		int invocationsInClass=0;
+		int parametersInClass=0;
+	
+		for(MethodBean methodBean: cb.getMethods()) {
+			
+			for(MethodBean call: methodBean.getMethodCalls()) {
+				if(call.getBelongingClass().getName().equals(methodBean.getBelongingClass().getName())) {
+					invocationsInClass++;
+					parametersInClass+=call.getParameters().size();
+				}
+			}
+		}
 		
-		
-		
-		return ich;
+		if(parametersInClass>0)
+			return invocationsInClass/parametersInClass;
+		else return invocationsInClass;
 	}
 	
-	
-	public static int getNOM(ClassBean cb){
+	public static int getWMC(ClassBean cb){
 		return cb.getMethods().size();
 	}
 
@@ -593,7 +671,7 @@ public class CKMetrics {
 
 		return false;
 	}
-
+	
 	private static boolean existDependencyBetween(MethodBean m1, MethodBean m2){
 
 		for(MethodBean call: m1.getMethodCalls()) {

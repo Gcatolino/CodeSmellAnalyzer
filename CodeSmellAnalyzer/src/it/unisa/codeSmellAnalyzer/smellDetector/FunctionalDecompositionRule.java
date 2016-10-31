@@ -10,7 +10,7 @@ public class FunctionalDecompositionRule {
 		int noa = CKMetrics.getNOA(pClass);
 
 		if(noa == nPrivateFields) {
-			if(CKMetrics.getNOM(pClass) < 3) {
+			if(CKMetrics.getWMC(pClass) < 3) {
 				String className = pClass.getName();
 
 				if( (className.toLowerCase().contains("make")) || (className.toLowerCase().contains("create")) ||

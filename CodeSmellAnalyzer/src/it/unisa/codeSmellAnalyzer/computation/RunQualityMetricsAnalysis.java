@@ -31,7 +31,7 @@ public class RunQualityMetricsAnalysis {
 									
 						output+=packageBean.getName() +"."+classBean.getName() + ";" + CKMetrics.getLOC(classBean) + ";" 
 								+ CKMetrics.getLCOM2(classBean) + ";" + CKMetrics.getCBO(classBean) + ";" 
-								+ CKMetrics.getWMC(classBean) + ";" + CKMetrics.getRFC(classBean) + "\n";
+								+ CKMetrics.getMcCabeMetric(classBean) + ";" + CKMetrics.getRFC(classBean) + "\n";
 						
 						// Other metrics are available in the CKMetrics class.
 						

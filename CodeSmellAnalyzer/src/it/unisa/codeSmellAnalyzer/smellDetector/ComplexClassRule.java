@@ -7,7 +7,7 @@ public class ComplexClassRule {
 
 	public boolean isComplexClass(ClassBean pClass) {
 
-		if(CKMetrics.getWMC(pClass) > 200)
+		if(CKMetrics.getMcCabeMetric(pClass) > 200)
 				return true;
 
 		return false;
