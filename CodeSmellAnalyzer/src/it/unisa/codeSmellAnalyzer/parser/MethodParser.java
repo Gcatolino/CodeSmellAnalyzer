@@ -36,6 +36,10 @@ public class MethodParser {
 		Collection<String> names = new HashSet<String>();
 		pMethodNode.accept(new NameVisitor(names));
 		
+		Collection<AssertStatement> assertions = new HashSet<AssertStatement>();
+		pMethodNode.accept(new AssertVisitor(assertions));
+		methodBean.setAssertions(assertions.size());
+
 		// Verify the correspondence between names and instance variables 
 		Collection<InstanceVariableBean> usedInstanceVariableBeans = getUsedInstanceVariable(names, pClassInstanceVariableBeans);
 		

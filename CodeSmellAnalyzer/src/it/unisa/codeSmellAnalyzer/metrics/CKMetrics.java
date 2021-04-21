@@ -26,7 +26,7 @@ public class CKMetrics {
 		
 		return 0;
 	}
-	
+
 	public static int getMcCabeMetric(ClassBean cb) {
 
 		int WMC = 0;
@@ -85,11 +85,19 @@ public class CKMetrics {
 
 	}
 
+	public static double getAssertionDensity(MethodBean mb){
+		double assertionDensity = 0.0;
+		double size = mb.getTextContent().split("\n");
+
+		assertionDensity = mb.getAssertions() / size;
+
+		return assertionDensity;
+	}
+
 
 	public static int getNOC(ClassBean cb, Vector<ClassBean> System){
 
 		int NOC = 0;
-
 
 		for(ClassBean c: System){
 			if(c.getSuperclass() != null && c.getSuperclass().equals(cb.getName())){

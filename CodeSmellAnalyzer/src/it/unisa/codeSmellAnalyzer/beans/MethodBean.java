@@ -15,6 +15,7 @@ public class MethodBean {
 	private String textContent;
 	private Collection<InstanceVariableBean> usedInstanceVariables;
 	private Collection<MethodBean> methodCalls;
+	private double assertions;
 	private Type returnType;
 	private List<SingleVariableDeclaration> parameters;
 	
@@ -126,6 +127,15 @@ public class MethodBean {
 	public void setVisibility(int visibility) {
 		this.visibility = visibility;
 	}
+
+	public double getAssertions() {
+		return assertions;
+	}
+
+	public void setAssertions(double assertions) {
+		this.assertions = assertions;
+	}
+
 
 	public boolean equals(Object arg){
 		return(this.getName().equals(((MethodBean)arg).getName()));

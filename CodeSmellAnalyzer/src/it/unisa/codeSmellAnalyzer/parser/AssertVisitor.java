@@ -10,6 +10,10 @@ import org.eclipse.jdt.core.dom.AssertStatement;
 public class AssertVisitor extends ASTVisitor {
 
 	private List<AssertStatement> asserts = new ArrayList<AssertStatement>();
+	
+	public AssertVisitor(Collection<AssertStatement> pAsserts) {
+		asserts = pAsserts;
+	}
 
 	@Override
 	public boolean visit(AssertStatement node) {
