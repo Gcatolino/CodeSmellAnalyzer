@@ -94,6 +94,23 @@ public class CKMetrics {
 		return assertionDensity;
 	}
 
+	public static double getAssertionDensity2(MethodBean mb) {
+		double assertionDensity = 0.0;
+		double asserts = 0.0;
+		double size = mb.getTextContent().split("\n");
+
+		Pattern pattern = Pattern.compile("assert*", Pattern.CASE_INSENSITIVE);
+    	Matcher matcher = pattern.matcher(mb.getTextContent());
+    	boolean matchFound = matcher.find();
+		
+		while(matcher.find()) {
+			asserts++;
+		}    
+
+		assertionDensity = asserts / size;
+
+		return assertionDensity;
+	}
 
 	public static int getNOC(ClassBean cb, Vector<ClassBean> System){
 

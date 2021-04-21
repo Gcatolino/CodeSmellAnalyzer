@@ -85,7 +85,7 @@ public class RunCodeSmellDetection {
 					
 						double tloc = testCase.getTextContent.split("\n");
 						double tmcCabe = CKMetrics.getMcCabeMetric(testCase);
-						double assertionDensity = CKMetrics.getAssertionDensity(testCase);
+						double assertionDensity = CKMetrics.getAssertionDensity2(testCase);
 
 						output += classBean.getBelongingPackage() + "." + classBean.getName() + "." + testCase.getName() + ","
 							+ tloc + "," + lmcCabe + "," + assertionDensity + "," + isAssertionRoulette + "," + isMysteryGuest 
